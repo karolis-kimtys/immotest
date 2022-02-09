@@ -1,12 +1,17 @@
 import './SearchResults.css'
 
+// import checkIcon from '../../../Assets/check-icon.svg'
+
 export default function SearchResults() {
   return (
     <div className='search-results'>
       <h3>Search results</h3>
       <table>
-        <tr className='table-header'>
-          <th className='table-checkbox'>✔️</th>
+        <thead className='table-header'>
+          <th className='table-check-input'>
+            {/* <img className='table-check-icon' src={checkIcon} alt='' /> */}
+            ✔️
+          </th>
           <th>Address</th>
           <th>Postcode</th>
           <th>Property type</th>
@@ -14,9 +19,10 @@ export default function SearchResults() {
           <th>
             Floor area (m<sup>2</sup>)
           </th>
-        </tr>
+        </thead>
+
         <tr className='table-body-row'>
-          <td className='table-checkbox'>
+          <td className='table-check-input'>
             <input type='checkbox' />
           </td>
           <td>Alfreds Futterkiste</td>
@@ -26,7 +32,7 @@ export default function SearchResults() {
           <td>Germany</td>
         </tr>
         <tr className='table-body-row'>
-          <td className='table-checkbox'>
+          <td className='table-check-input'>
             <input type='checkbox' />
           </td>
           <td>Alfreds Futterkiste</td>
@@ -36,7 +42,7 @@ export default function SearchResults() {
           <td>Germany</td>
         </tr>
         <tr className='table-body-row'>
-          <td className='table-checkbox'>
+          <td className='table-check-input'>
             <input type='checkbox' />
           </td>
           <td>Alfreds Futterkiste</td>

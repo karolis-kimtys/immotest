@@ -1,10 +1,7 @@
 .search-results {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 90%;
-  margin: 25px;
+  width: calc(100% - 60px);
+  margin: 0 30px;
+  padding: 0 0 50px 0;
 }
 
 .search-results h3 {
@@ -21,7 +18,14 @@
   align-items: center;
   width: 100%;
 }
+.table-check-icon {
+  width: 20px;
+}
 
-.table-checkbox {
-  max-width: 50px;
+.table-check-input {
+  max-width: 10px;
+}
+
+.table-header .table-check-input {
+  max-width: 30px;
 }

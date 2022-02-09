@@ -1,10 +1,7 @@
 .search-bar {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 90%;
-  margin: 25px;
+  width: calc(100% - 60px);
+  margin: 0 30px;
+  position: relative;
 }
 
 .search-bar h3 {
@@ -19,12 +16,10 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 100%;
 }
 
 .search-bar-container input {
-  flex: 4;
+  flex: 3;
   padding: 10px 25px;
   border-radius: 5px;
   border: 2px solid var(--light-gray);
@@ -35,8 +30,8 @@
   opacity: 1;
 }
 
-.search-bar-container button {
-  flex: 0.5;
+.search-bar-button {
+  width: 150px;
   padding: 10px 25px;
   margin-left: 25px;
   background: rgb(235, 219, 67);
@@ -47,4 +42,35 @@
   );
   border: 2px solid rgb(233, 201, 60);
   border-radius: 5px;
+}
+
+.search-bar-button:hover {
+  cursor: pointer;
+  border: 2px solid rgb(233, 201, 60);
+  background: rgb(235, 219, 67);
+  background: linear-gradient(
+    180deg,
+    rgb(233, 219, 98) 0%,
+    rgb(248, 218, 86) 100%
+  );
+}
+
+.autocomplete-container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  /* width: 100%; */
+  border: 1px solid var(--light-gray);
+  border-radius: 5px;
+}
+
+.autocomplete-item {
+  padding: 10px 25px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.autocomplete-item:hover {
+  background: var(--light-gray);
 }
