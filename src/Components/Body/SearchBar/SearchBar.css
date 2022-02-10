@@ -1,6 +1,6 @@
 .search-bar {
   width: calc(100% - 60px);
-  margin: 0 30px;
+  margin: 0 30px 30px 30px;
   position: relative;
 }
 
@@ -42,6 +42,15 @@
   );
   border: 2px solid rgb(233, 201, 60);
   border-radius: 5px;
+  color: black;
+  font-weight: bold;
+}
+.search-bar-button:disabled {
+  background: linear-gradient(
+    180deg,
+    rgba(235, 219, 67, 0.5) 0%,
+    rgba(235, 205, 69, 0.5) 100%
+  );
 }
 
 .search-bar-button:hover {

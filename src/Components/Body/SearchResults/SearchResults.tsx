@@ -1,56 +1,86 @@
 import './SearchResults.css'
-
-// import checkIcon from '../../../Assets/check-icon.svg'
+import { useGlobalContext } from '../../../Context/Context'
 
 export default function SearchResults() {
+  const {
+    isSelectedType,
+    isProperties,
+    isSearchError,
+    isSelectedProperties,
+    setIsSelectedProperties
+  } = useGlobalContext()
+
+  const addProperty = (property: any) => {
+    let tempList: any = [...isSelectedProperties]
+
+    tempList.push(property)
+
+    setIsSelectedProperties(tempList)
+  }
+
   return (
     <div className='search-results'>
-      <h3>Search results</h3>
+      <h3>Search Results</h3>
       <table>
-        <thead className='table-header'>
-          <th className='table-check-input'>
-            {/* <img className='table-check-icon' src={checkIcon} alt='' /> */}
-            ✔️
-          </th>
-          <th>Address</th>
-          <th>Postcode</th>
-          <th>Property type</th>
-          <th>Number of rooms</th>
-          <th>
-            Floor area (m<sup>2</sup>)
-          </th>
+        <thead>
+          <tr className='table-header'>
+            <th className='table-check-input'></th>
+            <th>Address</th>
+            <th>Postcode</th>
+            <th>Number of rooms</th>
+            <th>
+              Floor area
+              <span>
+                (m<sup>2</sup>)
+              </span>
+            </th>
+          </tr>
         </thead>
 
-        <tr className='table-body-row'>
-          <td className='table-check-input'>
-            <input type='checkbox' />
-          </td>
-          <td>Alfreds Futterkiste</td>
-          <td>Maria Anders</td>
-          <td>Germany</td>
-          <td>Germany</td>
-          <td>Germany</td>
-        </tr>
-        <tr className='table-body-row'>
-          <td className='table-check-input'>
-            <input type='checkbox' />
-          </td>
-          <td>Alfreds Futterkiste</td>
-          <td>Maria Anders</td>
-          <td>Germany</td>
-          <td>Germany</td>
-          <td>Germany</td>
-        </tr>
-        <tr className='table-body-row'>
-          <td className='table-check-input'>
-            <input type='checkbox' />
-          </td>
-          <td>Alfreds Futterkiste</td>
-          <td>Maria Anders</td>
-          <td>Germany</td>
-          <td>Germany</td>
-          <td>Germany</td>
-        </tr>
+        <tbody>
+          {!isSearchError &&
+            Object.values(isProperties).map((property: any, key: number) => {
+              return isSelectedType === property.propertyType ? (
+                <tr key={key} className='table-body-row'>
+                  <td className='table-check-input'>
+                    <input type='checkbox' />
+                  </td>
+                  <td>{property.address}</td>
+                  <td>{property.postcode}</td>
+                  <td>{property.numberOfRooms}</td>
+                  <td>{property.floorArea}</td>
+                  <td>{property.propertyType}</td>
+                </tr>
+              ) : (
+                isSelectedType === 'all' && (
+                  <tr key={key} className='table-body-row'>
+                    <td
+                      className='table-check-input icon'
+                      onClick={() => {
+                        addProperty(property)
+                      }}>
+                      {isSelectedProperties.findIndex(
+                        (x: any) => x.id === property.id
+                      ) === -1 && <div>➕</div>}
+                    </td>
+                    <td>{property.address}</td>
+                    <td>{property.postcode}</td>
+                    <td>{property.numberOfRooms}</td>
+                    <td>{property.floorArea}</td>
+                  </tr>
+                )
+              )
+            })}
+
+          {isSearchError && (
+            <tr className='table-body-row'>
+              <td>
+                Issue fetching list of properties. Please refresh the page and
+                try again!
+              </td>
+            </tr>
+          )}
+        </tbody>
       </table>
     </div>
   )

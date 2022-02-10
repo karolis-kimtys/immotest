@@ -1,10 +1,14 @@
 import React, { useContext, useState, Dispatch, SetStateAction } from 'react'
 
 interface ContextInterface {
+  isSelectedType: string
+  setIsSelectedType: Dispatch<SetStateAction<string>>
   isProperties: any
   setIsProperties: Dispatch<SetStateAction<any>>
-  isSearchComplete: boolean
-  setIsSearchComplete: Dispatch<SetStateAction<boolean>>
+  isSearchError: boolean
+  setIsSearchError: Dispatch<SetStateAction<boolean>>
+  isSelectedProperties: any
+  setIsSelectedProperties: Dispatch<SetStateAction<any>>
 }
 
 export const APIContext = React.createContext<ContextInterface>(
@@ -16,14 +20,20 @@ export const useGlobalContext = () => {
 }
 
 export const APIProvider = ({ children }: any) => {
-  const [isProperties, setIsProperties] = useState([] as any)
-  const [isSearchComplete, setIsSearchComplete] = useState(false)
+  const [isSelectedType, setIsSelectedType] = useState('all')
+  const [isProperties, setIsProperties] = useState([])
+  const [isSearchError, setIsSearchError] = useState(false)
+  const [isSelectedProperties, setIsSelectedProperties] = useState([])
 
   const value = {
+    isSelectedType,
+    setIsSelectedType,
     isProperties,
     setIsProperties,
-    isSearchComplete,
-    setIsSearchComplete
+    isSearchError,
+    setIsSearchError,
+    isSelectedProperties,
+    setIsSelectedProperties
   }
 
   return <APIContext.Provider value={value}>{children}</APIContext.Provider>

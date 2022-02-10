@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
 import './PropertyTypes.css'
+import { useGlobalContext } from '../../../Context/Context'
 import { getAvailablePropertyTypes } from '../../../frontend_engineer/api'
 
 export default function PropertyTypes() {
-  const [isSelected, setIsSelected] = useState<number>()
+  const { isSelectedType, setIsSelectedType } = useGlobalContext()
+
   const [isPropertyTypes, setIsPropertyTypes] = useState({})
 
   useEffect(() => {
@@ -17,21 +19,29 @@ export default function PropertyTypes() {
       <div className='property-types-container'>
         <h3>Property Types</h3>
         <div className='types'>
+          <p
+            className={`property-type-all ${
+              'all' === isSelectedType && 'selected'
+            }`}
+            onClick={() => {
+              setIsSelectedType('all')
+            }}>
+            All
+          </p>
           {Object.values(isPropertyTypes).map((type: any, key: number) => {
             return (
               <p
                 key={key}
-                className={`property-type-${key} ${
-                  key === isSelected && 'selected'
+                className={`property-type-${type.value} ${
+                  type.value === isSelectedType && 'selected'
                 }`}
                 onClick={() => {
-                  setIsSelected(key)
+                  setIsSelectedType(type.value)
                 }}>
                 {type.label}
               </p>
             )
           })}
-          {/* <p className='selected'>All</p> */}
         </div>
       </div>
     </div>

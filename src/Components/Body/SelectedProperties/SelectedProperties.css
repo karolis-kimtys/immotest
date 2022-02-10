@@ -1,6 +1,6 @@
 .selected-properties {
   width: calc(100% - 60px);
-  margin: 0 30px;
+  margin: 0 30px 30px 30px;
 }
 
 .selected-properties h3 {
@@ -51,4 +51,9 @@
   flex: 1;
   background-color: rgb(243, 243, 243);
   padding: 10px 10px;
+}
+
+.table-check-input input,
+.table-check-input.icon {
+  cursor: pointer;
 }

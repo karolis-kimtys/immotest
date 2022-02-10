@@ -8,8 +8,7 @@ import {
 } from '../../../frontend_engineer/api'
 
 export default function SearchBar() {
-  const { isProperties, setIsProperties, setIsSearchComplete } =
-    useGlobalContext()
+  const { setIsProperties, setIsSearchError } = useGlobalContext()
   const [isSelection, setIsSelection] = useState<any>([])
   const [isIDs, setIsIDs] = useState<any>([])
   const [isAddresses, setIsAddresses] = useState([])
@@ -25,10 +24,6 @@ export default function SearchBar() {
           .then((response) => {
             setIsSelection(response.properties)
             Object.values(response).map((property: any) => {
-              console.log(
-                '🚀 - file: SearchBar.tsx - line 27 - property',
-                property
-              )
               return property.map((value: any) => {
                 list.push(value.address)
                 ids.push(value.id)
@@ -39,9 +34,9 @@ export default function SearchBar() {
             setIsAddresses(list)
             setIsAutocompleteOpen(true)
           })
-
           .catch((error) => {
             console.log(error)
+            setIsAutocompleteOpen(false)
           })
       : (function () {
           setIsAddresses([])
@@ -50,15 +45,18 @@ export default function SearchBar() {
         })()
   }
 
+  let listPropertyDetails: any = []
   const onSubmit = () => {
     setIsAutocompleteOpen(false)
+    setIsSearchError(false)
 
-    let listPropertyDetails: any = [...isProperties]
+    typeof isIDs === 'undefined' && setIsSearchError(true)
 
     typeof isIDs === 'string' &&
       fetchPropertyDetails(isIDs).then((response) => {
         listPropertyDetails.push(response.property)
         setIsProperties(listPropertyDetails)
+        setIsAutocompleteOpen(false)
       })
 
     typeof isIDs === 'object' &&
@@ -66,20 +64,24 @@ export default function SearchBar() {
         fetchPropertyDetails(id)
           .then((response) => {
             listPropertyDetails.push(response.property)
-            setIsProperties(listPropertyDetails)
+            setIsProperties([...listPropertyDetails])
+            setIsAutocompleteOpen(false)
           })
           .catch((error) => {
             console.log(error)
+            setIsAutocompleteOpen(false)
+            setIsSearchError(true)
+            setIsAddresses([])
+            setIsSelection([])
+            setIsProperties([])
           })
       })
 
-    setIsSearchComplete(true)
-
-    console.log(isProperties)
+    setIsSelected('')
   }
 
   return (
-    <div className='search-bar'>
+    <form className='search-bar'>
       <h3>Search</h3>
       <div className='search-bar-container'>
         <input
@@ -93,10 +95,12 @@ export default function SearchBar() {
         />
 
         <button
+          type='submit'
           className='search-bar-button'
           onClick={() => {
             onSubmit()
-          }}>
+          }}
+          disabled={isSelected === ''}>
           Search
         </button>
       </div>
@@ -119,6 +123,6 @@ export default function SearchBar() {
           })}
         </div>
       )}
-    </div>
+    </form>
   )
 }
