@@ -52,14 +52,19 @@ export default function SearchResults() {
             Object.values(isProperties).map((property: any, key: number) => {
               return isSelectedType === property.propertyType ? (
                 <tr key={key} className='table-body-row'>
-                  <td className='table-check-input'>
-                    <input type='checkbox' />
+                  <td
+                    className='table-check-input icon'
+                    onClick={() => {
+                      addProperty(property)
+                    }}>
+                    {isSelectedProperties.findIndex(
+                      (x: any) => x.id === property.id
+                    ) === -1 && <div>➕</div>}
                   </td>
                   <td>{property.address}</td>
                   <td>{property.postcode}</td>
                   <td>{property.numberOfRooms}</td>
                   <td>{property.floorArea}</td>
-                  <td>{property.propertyType}</td>
                 </tr>
               ) : (
                 isSelectedType === 'all' && (

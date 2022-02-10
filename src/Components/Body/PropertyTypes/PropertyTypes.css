@@ -13,7 +13,7 @@
 .property-types-container {
   width: calc(100% - 30px);
   padding: 25px;
-  margin: 0 30px;
+  margin: 0 0 0 30px;
   background-color: var(--light-gray);
 }
 .property-types-container p {
