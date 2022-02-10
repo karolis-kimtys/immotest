@@ -23,6 +23,7 @@
     "noUnusedParameters": true,
   },
   "include": [
-    "src"
+    "src",
+    "node_modules/mtm-spinner/dist"
   ]
 }

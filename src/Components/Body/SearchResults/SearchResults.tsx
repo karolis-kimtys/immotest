@@ -7,7 +7,8 @@ export default function SearchResults() {
     isProperties,
     isSearchError,
     isSelectedProperties,
-    setIsSelectedProperties
+    setIsSelectedProperties,
+    isLoading
   } = useGlobalContext()
 
   const addProperty = (property: any) => {
@@ -16,6 +17,8 @@ export default function SearchResults() {
     tempList.push(property)
 
     setIsSelectedProperties(tempList)
+
+    return null
   }
 
   return (
@@ -38,7 +41,14 @@ export default function SearchResults() {
         </thead>
 
         <tbody>
-          {!isSearchError &&
+          {isLoading ? (
+            <tr className='table-body-row'>
+              <td>
+                <p>Loading...</p>
+              </td>
+            </tr>
+          ) : (
+            !isSearchError &&
             Object.values(isProperties).map((property: any, key: number) => {
               return isSelectedType === property.propertyType ? (
                 <tr key={key} className='table-body-row'>
@@ -70,7 +80,8 @@ export default function SearchResults() {
                   </tr>
                 )
               )
-            })}
+            })
+          )}
 
           {isSearchError && (
             <tr className='table-body-row'>

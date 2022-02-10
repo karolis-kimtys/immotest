@@ -17,7 +17,7 @@ export default function PropertyTypes() {
   return (
     <div className='property-types'>
       <div className='property-types-container'>
-        <h3>Property Types</h3>
+        <h3 data-testid='title'>Property Types</h3>
         <div className='types'>
           <p
             className={`property-type-all ${
@@ -25,7 +25,8 @@ export default function PropertyTypes() {
             }`}
             onClick={() => {
               setIsSelectedType('all')
-            }}>
+            }}
+            data-testid='all'>
             All
           </p>
           {Object.values(isPropertyTypes).map((type: any, key: number) => {
@@ -37,7 +38,8 @@ export default function PropertyTypes() {
                 }`}
                 onClick={() => {
                   setIsSelectedType(type.value)
-                }}>
+                }}
+                data-testid={type.value}>
                 {type.label}
               </p>
             )

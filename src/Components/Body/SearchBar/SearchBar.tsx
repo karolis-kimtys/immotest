@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './SearchBar.css'
+
 import { useGlobalContext } from '../../../Context/Context'
 
 import {
@@ -8,7 +9,7 @@ import {
 } from '../../../frontend_engineer/api'
 
 export default function SearchBar() {
-  const { setIsProperties, setIsSearchError } = useGlobalContext()
+  const { setIsProperties, setIsSearchError, setIsLoading } = useGlobalContext()
   const [isSelection, setIsSelection] = useState<any>([])
   const [isIDs, setIsIDs] = useState<any>([])
   const [isAddresses, setIsAddresses] = useState([])
@@ -16,9 +17,11 @@ export default function SearchBar() {
   const [isSelected, setIsSelected] = useState('')
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsLoading(true)
     setIsSelected(event.target.value)
     let list: any = []
     let ids: any = []
+
     event.target.value.length > 0
       ? fetchProperties({ address: event.target.value })
           .then((response) => {
@@ -33,14 +36,17 @@ export default function SearchBar() {
             setIsIDs([ids])
             setIsAddresses(list)
             setIsAutocompleteOpen(true)
+            setIsLoading(false)
           })
           .catch((error) => {
             console.log(error)
             setIsAutocompleteOpen(false)
+            setIsLoading(false)
           })
       : (function () {
           setIsAddresses([])
           setIsSelection([])
+          setIsLoading(false)
           setIsAutocompleteOpen(false)
         })()
   }
@@ -82,9 +88,10 @@ export default function SearchBar() {
 
   return (
     <form className='search-bar'>
-      <h3>Search</h3>
+      <h3 data-testid='title'>Search</h3>
       <div className='search-bar-container'>
         <input
+          data-testid='input-field'
           value={isSelected}
           type='search'
           name='address'
@@ -95,6 +102,7 @@ export default function SearchBar() {
         />
 
         <button
+          data-testid='search-button'
           type='submit'
           className='search-bar-button'
           onClick={() => {
@@ -106,10 +114,13 @@ export default function SearchBar() {
       </div>
 
       {isAutocompleteOpen && (
-        <div className='autocomplete-container'>
+        <div
+          className='autocomplete-container'
+          data-testid='autocomplete-container'>
           {isAddresses.map((value: string, key: number) => {
             return (
               <p
+                data-testid='address-suggestion'
                 key={key}
                 className='autocomplete-item'
                 onClick={() => {
