@@ -6,8 +6,10 @@ import { getAvailablePropertyTypes } from '../../../frontend_engineer/api'
 export default function PropertyTypes() {
   const { isSelectedType, setIsSelectedType } = useGlobalContext()
 
+  // Store property types inside state
   const [isPropertyTypes, setIsPropertyTypes] = useState({})
 
+  // Returns list of property types from API
   useEffect(() => {
     getAvailablePropertyTypes().then((response) => {
       setIsPropertyTypes(response.propertyTypes)
@@ -29,6 +31,8 @@ export default function PropertyTypes() {
             data-testid='all'>
             All
           </p>
+
+          {/* Return and display list of available properties */}
           {Object.values(isPropertyTypes).map((type: any, key: number) => {
             return (
               <p

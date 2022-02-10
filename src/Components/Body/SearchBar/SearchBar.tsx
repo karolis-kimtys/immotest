@@ -1,8 +1,6 @@
 import { useState } from 'react'
 import './SearchBar.css'
-
 import { useGlobalContext } from '../../../Context/Context'
-
 import {
   fetchProperties,
   fetchPropertyDetails
@@ -16,16 +14,21 @@ export default function SearchBar() {
   const [isAutocompleteOpen, setIsAutocompleteOpen] = useState(false)
   const [isSelected, setIsSelected] = useState('')
 
+  // Searches and updates autocomplete list of properties on each letter types inside input field
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsLoading(true)
     setIsSelected(event.target.value)
+
+    // Temporary array lists
     let list: any = []
     let ids: any = []
 
+    // Search for properties based on input
     event.target.value.length > 0
       ? fetchProperties({ address: event.target.value })
           .then((response) => {
             setIsSelection(response.properties)
+            // Loops over properties and adds to temporary array
             Object.values(response).map((property: any) => {
               return property.map((value: any) => {
                 list.push(value.address)
@@ -44,6 +47,7 @@ export default function SearchBar() {
             setIsLoading(false)
           })
       : (function () {
+          // Set all states to default values if input field empty
           setIsAddresses([])
           setIsSelection([])
           setIsLoading(false)
@@ -58,6 +62,7 @@ export default function SearchBar() {
 
     typeof isIDs === 'undefined' && setIsSearchError(true)
 
+    // If only one property (exact address) is selected then fetch details of that property
     typeof isIDs === 'string' &&
       fetchPropertyDetails(isIDs).then((response) => {
         listPropertyDetails.push(response.property)
@@ -65,6 +70,7 @@ export default function SearchBar() {
         setIsAutocompleteOpen(false)
       })
 
+    // If multiple properties are selected then fetch details of each property
     typeof isIDs === 'object' &&
       isIDs[0].forEach((id: any) => {
         fetchPropertyDetails(id)
