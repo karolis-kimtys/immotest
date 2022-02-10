@@ -1,10 +1,14 @@
 # IMMO Test
 
 Project was built using React and TypeScript. 
+
 Code test written using React Testing Library. 
+
 All styles have been custom written using CSS.
+
 Global state is managed using React useContext hook. 
-TypeScript is using Strict mode, but to finish the project quicker, quite few "any" types used, so TypeScript type checking is relaxed.
+
+TypeScript is using Strict mode, but "any" types used to relax type checking for quicker project completion.
 
 [Live Demo Hosted on Netlify](https://immotest.netlify.app/)
 
